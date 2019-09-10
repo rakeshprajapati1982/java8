@@ -1,4 +1,4 @@
-package com.readtorakesh.java8.executor.encryption;
+package com.readtorakesh.java8.encryption;
 
 import java.nio.ByteBuffer;
 import java.security.SecureRandom;
@@ -21,7 +21,7 @@ public class EncryptionDecryptionHelper_AES_CTR {
 		System.out.println("Key Length \t: " + (secretKeyBytes.length * 8) + " bits");
 		System.out.println("-----------------------------------------------------------------");
 		
-		String plainText = "abc";
+		String plainText = "read2rakesh";
 		System.out.println("Plain Text \t: " + plainText);
 		
 		String encryptedBase64 = mainApp.encrypt(plainText, secretKeyBytes);
@@ -87,8 +87,7 @@ public class EncryptionDecryptionHelper_AES_CTR {
 	}
 
 	private byte[] generateIvBytes() {
-		// 128 bit iv
-		byte[] ivBytes = new byte[128 / 8];
+		byte[] ivBytes = new byte[128 / 8]; // 128 bit iv
 
 		SecureRandom secureRandom = new SecureRandom();
 		secureRandom.nextBytes(ivBytes);
@@ -98,8 +97,26 @@ public class EncryptionDecryptionHelper_AES_CTR {
 	
 	private byte[] generateSecretKeyBytes() throws Exception {
 		KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
+		keyGenerator.init(128);
 		SecretKey secretKey = keyGenerator.generateKey();
 		return secretKey.getEncoded();
 	}
 	
 }
+
+/* 
+--- Output ---
+-----------------------------------------------------------------
+Algoritham 	: AES with CTR (Counter Mode) block mode
+Key Length 	: 128 bits
+-----------------------------------------------------------------
+Plain Text 	: read2rakesh
+Encrypted Text 	: EAalzVIBffg7s7eVISp39xLw2vvkCYw86s73+g==
+Decrypted Text 	: read2rakesh
+
+
+Encrypted same text multiple times
+Plain Text : read2rakesh | Encrypted Text : EFPhpXKTaj4TxHkSySfFoEKvxnZL0LeQOT1Zjw==
+Plain Text : read2rakesh | Encrypted Text : EGgJc3HEo/xR/m/QKC//dTCDLFcBlE81pLzMAQ==
+Plain Text : read2rakesh | Encrypted Text : ENdP2aWfQ7VgUnXskiFl0USAPymHYybfDCCtfw==
+*/

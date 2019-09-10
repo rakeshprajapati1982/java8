@@ -1,4 +1,4 @@
-package com.readtorakesh.java8.executor.encryption;
+package com.readtorakesh.java8.encryption;
 
 import java.util.Base64;
 
@@ -18,7 +18,7 @@ public class EncryptionDecryptionHelper_AES_ECB {
 		System.out.println("Key Length \t: " + (secretKeyBytes.length * 8) + " bits");
 		System.out.println("-----------------------------------------------------------------");
 		
-		String plainText = "abc";
+		String plainText = "read2rakesh";
 		System.out.println("Plain Text \t: " + plainText);
 		
 		String encryptedBase64 = mainApp.encrypt(plainText, secretKeyBytes);
@@ -61,8 +61,25 @@ public class EncryptionDecryptionHelper_AES_ECB {
 	
 	private byte[] generateSecretKeyBytes() throws Exception {
 		KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
+		keyGenerator.init(128);
 		SecretKey secretKey = keyGenerator.generateKey();
 		return secretKey.getEncoded();
 	}
-	
 }
+
+/* 
+--- Output ---
+-----------------------------------------------------------------
+Algoritham 	: AES with ECB (Electronic Codebook) block mode
+Key Length 	: 128 bits
+-----------------------------------------------------------------
+Plain Text 	: read2rakesh
+Encrypted Text 	: w7xLEHSYKh0Hm5Lx0+MpUw==
+Decrypted Text 	: read2rakesh
+
+
+Encrypted same text multiple times
+Plain Text : read2rakesh | Encrypted Text : w7xLEHSYKh0Hm5Lx0+MpUw==
+Plain Text : read2rakesh | Encrypted Text : w7xLEHSYKh0Hm5Lx0+MpUw==
+Plain Text : read2rakesh | Encrypted Text : w7xLEHSYKh0Hm5Lx0+MpUw==
+*/

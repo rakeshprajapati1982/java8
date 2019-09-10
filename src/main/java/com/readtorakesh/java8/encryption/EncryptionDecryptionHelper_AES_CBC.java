@@ -1,4 +1,4 @@
-package com.readtorakesh.java8.executor.encryption;
+package com.readtorakesh.java8.encryption;
 
 import java.nio.ByteBuffer;
 import java.security.SecureRandom;
@@ -21,7 +21,7 @@ public class EncryptionDecryptionHelper_AES_CBC {
 		System.out.println("Key Length \t: " + (secretKeyBytes.length * 8) + " bits");
 		System.out.println("-----------------------------------------------------------------");
 		
-		String plainText = "abc";
+		String plainText = "read2rakesh";
 		System.out.println("Plain Text \t: " + plainText);
 		
 		String encryptedBase64 = mainApp.encrypt(plainText, secretKeyBytes);
@@ -87,8 +87,7 @@ public class EncryptionDecryptionHelper_AES_CBC {
 	}
 
 	private byte[] generateIvBytes() {
-		// 128 bit iv
-		byte[] ivBytes = new byte[128 / 8];
+		byte[] ivBytes = new byte[128 / 8]; // 128 bit iv
 
 		SecureRandom secureRandom = new SecureRandom();
 		secureRandom.nextBytes(ivBytes);
@@ -98,8 +97,26 @@ public class EncryptionDecryptionHelper_AES_CBC {
 	
 	private byte[] generateSecretKeyBytes() throws Exception {
 		KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
+		keyGenerator.init(128);
 		SecretKey secretKey = keyGenerator.generateKey();
 		return secretKey.getEncoded();
 	}
 	
 }
+
+/* 
+--- Output ---
+-----------------------------------------------------------------
+Algoritham 	: AES with CBC (Cipher Block Chaining) block mode
+Key Length 	: 128 bits
+-----------------------------------------------------------------
+Plain Text 	: read2rakesh
+Encrypted Text 	: EClGh792b1NPLW3e4I0mK63R24vRSU4Rk7SctctyCCoQ
+Decrypted Text 	: read2rakesh
+
+
+Encrypted same text multiple times
+Plain Text : read2rakesh | Encrypted Text : EAbXA5AU+pvJ1tfHQlT68/9uMa4Pq7El5mtSSVzoGlXE
+Plain Text : read2rakesh | Encrypted Text : EA5RSzFWsIA8OyrThRWTqw2zLuMvc+yt2VG8hwWdS829
+Plain Text : read2rakesh | Encrypted Text : ENnZSPIq4OgwEkaRhhy5f8pbeswrxo3N7w4MFk0Js8RP
+*/
